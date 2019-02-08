@@ -1,0 +1,123 @@
+Recommendation Engine for iSKill
+
+Information Retrieval vs Information Filtering
+	• Information retrieval is when the content is static and the information needs keep changing for a user. In that case a simple catalog can be made like that in a library, where all the content is indexed and the user can search for the relevant content.
+		○ Common approach : TFIDF
+	• Information filtering is when there's streams of data coming in and is very dynamic but the query needs are usually static like a user may just be interested in articles related to Sports or Politics. These interests can be inferred from a handmade profile of a user or be machine learned from the kind of information that they show their interest in. The assumptions made in Information Retrieval are reversed.
+
+
+Collaborative Filtering
+When the content is so huge that just relevance is not enough. The users want the information that's not only on topic but also the best. Early attempts were manual. Automated CF started with Grouplens project.
+
+Type of content on GT&O
+	1. Articles
+	2. Courses
+	3. Videos
+	4. Pictures
+
+For courses, it's better to create a catalog and make it searchable by title, domain etc. (Information Retrieval) For the content that's more dynamic like articles, a recommendation engine can be built. 
+(Information Filtering)
+
+How to create user profile:
+	1. Articles, videos, pictures liked by users.
+	2. Skills they are interested in. (Hand created profile would allow cold start. Learning from the history may take a long time depending on the pace at which the data grows.)
+
+
+Possibilities/ Approaches for recommendation
+
+Non-Personalized Recommender
+Most popular courses/ articles/ videos etc. 
+
+	• Summary statistics like Average ratings can be used. Total likes / upvotes gives a sense of popularity.
+	• Damped average can be used to avoid items with single 5 star rating to come on top vs that having 100 4 stars and 50 5 stars.
+	• Domain consideration
+		○ Time: Old news articles are not desired. Net upvotes polynomially decayed by age can be used. Like Hacker News.
+
+Skills with highest total ratings
+
+Stereotyped Recommender
+Segmenting the content based on Delivery Head/ Process type (whether it's technical or functional or at a more granular level)/ Demographics etc. Lightly personalized.
+
+For Delivery Head cut:
+The skills with highest (rating within dh/ overall rating) should be on top. That's a skill that's more likely to be sought after under a DH. But a skill liked by just one person may not be a good fit. It will have a low confidence. So, a damped mean can be used in this case:. We'll rather take a difference in the proportion of rating for each skill within the DH and the corresponding overall proportion.
+
+
+Product Associations
+People who took this course also took that course. People who read this article also read these etc. Non personalized.
+
+Content Based Filtering
+Personalized system. Using the meta data of the courses/ text in the articles/ tags in videos etc. for segmenting the content and then make personalized recommendations using the profile learned/ created by user in terms of what the topics they are interested in.
+
+Collaborative Filtering
+Personalized system. Learn what each user likes and use other user's experience to recommend.
+
+
+Output of a Recommender
+	1) Prediction: Numeric value indicating how much you may like a given item.
+	2) Recommendation: List of items that you may like. Don't make as bold statements as the predictions.
+	3) Filtering Interfaces: Like email filtering/ news feeds/ Facebook wall etc.
+
+Explicit vs Organic prediction or recommendation
+Explicit: Here's some items we've picked just for you. May feel like pushing some items to the user. Top n. In your face.
+Organic: Less explicit. More subtle, softer.
+
+Today, there has to be a balance between predictions and recommendations as well as the softer or explicit way in which they are presented.
+
+
+Framework for analyzing a recommender system
+
+	• Domain: What's being recommended: News articles/ Products/ Bundles/ Sequences (music playlist where order can also matter). New items (Mostly in case of movies/ books) vs Re-recommend (like music, groceries.. The consumption of the same item is done again and again)
+	• Purpose of recommendation: Recommendation themselves ex.: selling items, movies, music etc.. In other cases, recommendations for education. Suggesting commands/ shortcuts in a software that other people use but you don't.
+	• Context: Shopping?, Listening to music?, Hanging out with other people?
+	• Whose opinion?: Experts? (Like wine.com, An expert recommends wine) VS Ordinary people. (Aggregating the opinions expressed by folks)
+	• Level of Personalization: Non-personalized, Demographic (Stereotyped), Ephemeral (Match current activity, oh buying this book etc..), Persistent (long term interests)
+	• Privacy and Trustworthiness: 
+	• Interfaces: Predictions or recommendations or filtering and organic vs explicit. Inputs also can be explicit or implicit
+	• Recommendation Algorithms:  Non-personalized, content based, collaborative and others
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
