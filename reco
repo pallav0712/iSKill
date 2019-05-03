@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+import pandas as pd
+import numpy as np
+from matplotlib.pyplot import hist
+
+skills = ['skill_'+str(i) for i in range(100)
+users = ['user_'+str(i) for i in range(500)]
+ratings=[10,7,5]
+data=[]
+for u in users:
+    u_skills=[]
+    for j in range(np.random.randint(0,3)+1):
+        skill_j = int(np.random.normal(50,15))
+        while True:
+            if skill_j in u_skills:
+                skill_j = int(np.random.normal(50,15))
+            else:
+                u_skills.append(skill_j)
+                break
+        data.append([u,skills[skill_j],ratings[j]]) 
+df = pd.DataFrame(data,columns=['user_id', 'skill', 'rating'])
+pivot_df = df.pivot(index='user_id', columns='skill', values='rating').fillna(0)
+cur_user_skills = list(pivot_df.loc['user_32'][pivot_df.loc['user_32']>0.0].index)
+cur_user_skills
+pivot_df_cur_user = pivot_df[cur_user_skills]
+
+cur_user_skill_df = pivot_df_cur_user.loc['user_32']
+pivot_df_cur_user.drop(['user_32'], axis=0, inplace=True)
+cur_user_skill_df
+def get_similarity(row):
+    a=list(cur_user_skill_df)
+    b=list(row)
+    dot_product = np.dot(a, b)
+    norm_a = np.linalg.norm(a)
+    norm_b = np.linalg.norm(b)
+    return dot_product / (norm_a * norm_b)
+
+pivot_df_cur_user['similarity'] = pivot_df_cur_user.apply(get_similarity,axis=1)
+sorted_pivot = pivot_df_cur_user.sort_values(['similarity'], ascending=False)
+similar_users = sorted_pivot[sorted_pivot['similarity']>.5].index
+
+recommendations=[]
+def get_recommendation():
+    for su in similar_users:
+        for r in set(list(df[df['user_id']==su]['skill'])).difference(set(cur_user_skills)):
+            yield r
+
+reco_generator = get_recommendation()
+for i in range(3):
+    recommendations.append(next(reco_generator))
+
+
+# In[210]:
+
+
+recommendations
